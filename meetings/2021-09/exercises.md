@@ -8,7 +8,7 @@ meeting_nr: 202109
 <p class="message">
 This is a live document and will be updated during the week.
 
-Please talk to us and each other all the time.
+Please talk to us and each other!
 </p>
 
 * This will become a table of contents (this text will be scrapped).
@@ -19,7 +19,15 @@ Please talk to us and each other all the time.
 
 ### 1. Questions and problems
 
-  1. TODO 
+If you have any questions about or problems with anything related to the workshop,
+talk to us! Via gather.town, Slack, email, telephone, carrier pigeon, ...
+
+For some problem areas, participants volunteered to help out, so you can also ask them.
+(Feel free to add your name here).
+
+  - git: Jens Brandt, ...
+  - Julia: ...
+  - Oscar: ...
 
 ### 2. Work on your own Julia/Oscar code
 
