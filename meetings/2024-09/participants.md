@@ -29,8 +29,11 @@ people:
 weight: 5
 ---
 
+[<img src="../oscar-workshop-2024-09-17-thumb.jpg" />](../oscar-workshop-2024-09-17.jpg)
+
 {% include participants.html participants=page.people %}
 
 If you plan to attend, please register by sending an email
 to [Max](mailto:mhorn@rptu.de).
 This also applies to locals from Kaiserslautern!
+
