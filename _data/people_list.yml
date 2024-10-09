@@ -400,8 +400,6 @@
 
 - name: Laura Voggesberger
   affiliation: Ruhr-Universität Bochum
-  website: https://www.ruhr-uni-bochum.de/ffm/Lehrstuehle/Lehrstuhl-VI/voggesberger.html
-  email: laura.voggesberger@ruhr-uni-bochum.de
   github: voggesbe
   status: active
 
@@ -471,7 +469,7 @@
   affiliation: University of Kaiserslautern-Landau
   status: retired
   github: raulepure
-  comment: Used to work in TU KL, under whom and for what ? who ?
+  comment: PhD Student of Mathias Schulze until ~2021.
 
 - name: Rafael Fourquet
   affiliation: University of Kaiserslautern-Landau
@@ -540,7 +538,7 @@
   affiliation: IMAGINARY
   status: retired
   github: malex984
-  comment: Former student (phd?) in Kaiserslautern
+  comment: Postdoc in Kaiserslautern ~2010.
 
 - name: Markus Pfeiffer
   affiliation: St Andrews
