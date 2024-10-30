@@ -25,7 +25,7 @@ else:
 with open(infile, "r") as ymlfile:
     peopleList = yaml.safe_load(ymlfile)
 names = [i['github'] for i in peopleList]
-repoList = ["thofma/hecke.jl", "oscar-system/Oscar.jl", "Nemocas/Nemo.jl",
+repoList = ["thofma/Hecke.jl", "oscar-system/Oscar.jl", "Nemocas/Nemo.jl",
             "Nemocas/AbstractAlgebra.jl", "oscar-system/GAP.jl", "oscar-system/Polymake.jl",
             "oscar-system/Singular.jl"]
 
