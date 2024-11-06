@@ -10,11 +10,17 @@ title: Home
 
 # {{ site.title }}
 
+
 ## Upcoming events
 
-* [LEAN meets MaRDI and OSCAR (5 - 6 Dec, 2024 at TU Berlin).](https://polymake.org/doku.php/workshops/lean_workshop1224)
-* [Computational Algebraic Geometry Workshop (18 - 22 Nov, 2024 at Durham University).](https://sites.google.com/view/durhamcompalggeom/home)
-* [MaRDI Annual Meeting 2024 (18 - 20 Nov, 2024 at Fraunhofer ITWM Kaiserslautern)](https://www.itwm.fraunhofer.de/de/messen-veranstaltungen/2024/2024_11_18_mardi-annual-meeting.html)
+{% assign sorted_conferences = site.data.conferences | sort: "end-date" | reverse %}
+{% assign today = "now" | date: "%Y-%m-%d" %}
+
+{% for event in sorted_conferences %}
+  {% if event.end-date >= today %}
+* [{{ event.title }} ({{ event.date }} at {{ event.location }})]({{ event.website }})
+  {% endif %}
+{% endfor %}
 
 
 ## What is OSCAR?
