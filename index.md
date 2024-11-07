@@ -13,7 +13,7 @@ title: Home
 
 ## Upcoming events
 
-{% assign sorted_conferences = site.data.conferences | sort: "end-date" | reverse %}
+{% assign sorted_conferences = site.data.conferences | sort: "end-date" %}
 {% assign today = "now" | date: "%Y-%m-%d" %}
 
 {% for event in sorted_conferences %}
