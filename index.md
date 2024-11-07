@@ -13,12 +13,12 @@ title: Home
 
 ## Upcoming events
 
-{% assign sorted_conferences = site.data.conferences | sort: "end-date" %}
+{% assign sorted_conferences = site.data.conferences | sort: "start-date" %}
 {% assign today = "now" | date: "%Y-%m-%d" %}
 
 {% for event in sorted_conferences %}
   {% if event.end-date >= today %}
-* [{{ event.title }} ({{ event.date }} at {{ event.location }})]({{ event.website }})
+* [{{ event.title }} ({{ event.location }}, {{ event.start-date }} to {{ event.end-date }})]({{ event.website }})
   {% endif %}
 {% endfor %}
 
