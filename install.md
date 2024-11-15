@@ -194,22 +194,22 @@ installs browsers via snap which is disabled for subsystems. To circumvent this 
 please see [how to install browsers via deb](https://www.omgubuntu.co.uk/2022/04/how-to-install-firefox-deb-apt-ubuntu-22-04).
 
 
-## System-wide installation of Oscar
+## System-wide installation of OSCAR
 
-It is possible to install Oscar and its cornerstones only once on your system,
+It is possible to install OSCAR and its cornerstones only once on your system,
 and to let several people use this installation.
 For that, the following `bash` scripts can be used.
 
 (Users of such a system-wide installation may run into Julia errors
-if they have already installed some dependencies of Oscar in their
+if they have already installed some dependencies of OSCAR in their
 <code>~/.julia/packages</code>, or if they <C>add</C> them later on.)
 
 <div class="clickdesc">
 
 <details>
 <summary>
-Install Oscar system-wide,
-or update the system-wide installation of Oscar when a new version is available.
+Install OSCAR system-wide,
+or update the system-wide installation of OSCAR when a new version is available.
 </summary>
 Enter the following commands into a file (for example <code>oscar_systemwide_install</code>),
 adjust the paths for the variables <code>julia_for_oscar</code> and <code>central_depot</code>,
