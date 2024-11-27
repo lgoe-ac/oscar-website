@@ -18,10 +18,7 @@ class MyDumper(yaml.SafeDumper):
 # we don't want to overwrite the manually curated people_list
 # but we also need to include the autogen file if available
 # to keep a better track of retired people
-if os.path.isfile("../_data/autogen_people_list.yml"):
-    infile = "../_data/autogen_people_list.yml"
-else:
-    infile = "../_data/people_list.yml"
+infile = "../_data/people_list.yml"
 with open(infile, "r") as ymlfile:
     peopleList = yaml.safe_load(ymlfile)
 names = [i['github'] for i in peopleList]
@@ -122,7 +119,7 @@ sortedPeopleList = sorted(peopleList, key= lambda d: d['name'].split()[-1])
 pilist = [i for i in sortedPeopleList if i['status'] == "pi"]
 activelist = [i for i in sortedPeopleList if i['status'] == "active"]
 retiredlist = [i for i in sortedPeopleList if i['status'] == "retired"]
-with open('../_data/autogen_people_list.yml', 'w') as outfile:
+with open('../_data/people_list.yml', 'w') as outfile:
     outfile.write("######################\n# Project leads\n######################\n\n")
     yaml.dump(pilist, outfile, Dumper=MyDumper, sort_keys=False)
     outfile.write("\n######################\n# Active contributors\n######################\n\n")
