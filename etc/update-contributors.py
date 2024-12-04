@@ -31,7 +31,7 @@ namelist = []
 github_newusers = []
 github_userlist = []
 API_KEY = os.getenv("API_KEY") # TODO: rename to whatever is the right env var
-
+summarystring = "This PR updates the contributors list based on the latest changes.\n"
 # grab currently active devs
 if not os.path.isdir("repos"):
     os.mkdir("repos")
@@ -71,6 +71,9 @@ for repo in repoList:
         r = requests.get(github_commit_url, headers={"Authorization":f"Bearer {API_KEY}"})
         if r.status_code == 200:
             j = json.loads(r.text)
+            if j['author'] == None:
+                summarystring += f" - Github username not found for {i[0]} with email {i[1]}. Excluding from people_list.yml\n"
+                continue
             github_username = j['author']['login']
         else:
             # this will never happen, except if the API lies to you
@@ -126,3 +129,6 @@ with open('../_data/people_list.yml', 'w') as outfile:
     yaml.dump(activelist, outfile, Dumper=MyDumper, sort_keys=False)
     outfile.write("\n######################\n# Retired contributors\n######################\n\n")
     yaml.dump(retiredlist, outfile, Dumper=MyDumper, sort_keys=False)
+
+with open("../summary.txt", 'w') as summaryfile:
+    summaryfile.write(summarystring)

@@ -17,12 +17,18 @@ jobs:
       uses: actions/checkout@v3
       
     # Run the update script
-    - name: Install python yaml
-      run: pip install pyyaml
+    - name: Setup venv and install pyyaml
+      run: |
+        python3 -m venv /tmp/pyvenv
+        source /tmp/pyvenv/bin/activate
+        pip install pyyaml requests
 
     - name: Run update-contributors script
       run: |
-        python3 /etc/update-contributors.py
+        source /tmp/pyvenv/bin/activate
+        cd etc
+        python update-contributors.py
+        cd ..
 
     # Configure Git for the PR
     - name: Set up Git
@@ -34,14 +40,13 @@ jobs:
     - name: Commit Changes
       run: |
         git add _data/people_list.yml
-        git commit -m "Update contributors on $(date +'%Y-%m-%d')" || echo "No changes to commit" && false
+        git commit -m "Update contributors on $(date +'%Y-%m-%d')" || ${echo "No changes to commit" && false}
 
     # Create a pull request
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v7
       with:
         commit-message: "Update contributors on $(date +'%Y-%m-%d')"
         branch: update-contributors
         title: "Update contributors"
-        body: |
-          This PR updates the contributors list based on the latest changes.
+        body-path: summary.txt
