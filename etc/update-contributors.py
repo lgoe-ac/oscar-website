@@ -29,12 +29,14 @@ repoList = ["thofma/Hecke.jl", "oscar-system/Oscar.jl", "Nemocas/Nemo.jl",
             "Nemocas/AbstractAlgebra.jl", "oscar-system/GAP.jl", "oscar-system/Polymake.jl",
             "oscar-system/Singular.jl"]
 
+newcount = 0
 newList = []
 namelist = []
+newguylist = []
 github_newusers = []
 github_userlist = []
 API_KEY = os.getenv("API_KEY") # TODO: rename to whatever is the right env var
-summarystring = "This PR updates the contributors list based on the latest changes.\n"
+summarystring = ""
 # grab currently active devs
 if not os.path.isdir("repos"):
     os.mkdir("repos")
@@ -64,20 +66,38 @@ for repo in repoList:
         count = count+1
         print(f"Item {count} of {len(dnamelist)}...")
         print(i)
+        if i[0] == 'dependabot[bot]':
+            print("Skipping dependabot!")
+            continue
         email = i[1]
-        process = subprocess.Popen(['git', 'log', f'--author={email}', '--format=%H', '-n 1'],
-                                   stdout=subprocess.PIPE)
-        stdout, _ = process.communicate()
-        hash = stdout.decode().strip()
+        process = subprocess.run(['git', 'log', f'--author={email}', '--format=%H', '-n 1'],
+                                   capture_output=True)
+        hash = process.stdout.decode().strip()
         github_commit_url = f"https://api.github.com/repos/{repo}/commits/{hash}"
         #ask github API for username
         r = requests.get(github_commit_url, headers={"Authorization":f"Bearer {API_KEY}"})
         if r.status_code == 200:
             j = json.loads(r.text)
+            github_username = ''
             if j['author'] == None:
-                summarystring += f" - Github username not found for {i[0]} with email {i[1]}. Excluding from people_list.yml\n"
-                continue
-            github_username = j['author']['login']
+                # this commit was authored by someone and committed by someone else
+                # so github can't find a github user for the author, only for committed
+                # so we go through our list entire people list and see if we know the combination of
+                # name and email already
+                flag = False
+                for guy in peopleList:
+                    if 'email' in guy.keys() and 'name' in guy.keys():
+                        if i[0] == guy['name'] and i[1] == guy['email']:
+                            # we know the guy, check if we know the github ID
+                            if 'github' in guy.keys() and guy['github'] != '':
+                                # we know the guy and the github, just mark guy as active
+                                github_username = guy['github']
+                                flag = True
+                if not flag:
+                    summarystring += f"- Github username not found for {i[0]} with email {i[1]}. Excluding from people_list.yml\n"
+                    continue
+            if github_username == '':
+                github_username = j['author']['login']
         else:
             # this will never happen, except if the API lies to you
             # or blocks access
@@ -90,6 +110,8 @@ for repo in repoList:
         assert github_username != "__notfound__"
         if github_username not in names and github_username not in github_newusers:
             print("A new contributor!")
+            newcount += 1
+            newguylist.append(i[0])
             print(f"{i[0]}\t{i[1]}\t{github_username}")
             github_newusers.append(github_username)
             newList.append([i[0], i[1], github_username])
@@ -101,19 +123,35 @@ github_userlist = list(set(github_userlist))
 # mark active / retired
 # if PI, don't touch them
 os.chdir("..")
+retcount = 0
+revcount = 0
+retguylist = []
+revguylist = []
+# these people are always active
+activeWhitelist = ['Janko Böhm'] # expand list as needed
 for i in peopleList:
     if i['status']=='pi':
         continue
         #don't touch a thing!
     elif i['github'] in github_userlist:
+        if i['status'] == 'retired':
+            revcount += 1
+            revguylist.append(i['name'])
         i['status'] = 'active'
     else:
-        i['status'] = 'retired'
+        if i['name'] in activeWhitelist:
+            i['status'] = 'active'
+        else:
+            if i['status'] == 'active':
+                retcount += 1
+                retguylist.append(i['name'])
+            i['status'] = 'retired'
 
 np = []
 for i in newList:
     if "users.noreply.github.com" in i[1]:
         np.append({"name": i[0], "github": i[2], "status": "active"})
+        summarystring += f"- Email not found for {i[0]} ({i[2]})..!\n"
     else:
         np.append({"name": i[0], "email": i[1], "github": i[2], "status": "active"})
 peopleList.extend(np)
@@ -132,6 +170,12 @@ with open('../_data/people_list.yml', 'w') as outfile:
     yaml.dump(activelist, outfile, Dumper=MyDumper, sort_keys=False, allow_unicode=True)
     outfile.write("\n######################\n# Retired contributors\n######################\n\n")
     yaml.dump(retiredlist, outfile, Dumper=MyDumper, sort_keys=False, allow_unicode=True)
+
+summarystring = f"""This PR updates the contributors list based on the latest changes.
+New contributors : {newcount} | {newguylist}
+Revived contributors : {revcount} | {revguylist}
+Newly retired contributors : {retcount} | {retguylist}
+\nSummary Notes:\n\n"""+ summarystring
 
 with open("../summary.txt", 'w') as summaryfile:
     summaryfile.write(summarystring)
