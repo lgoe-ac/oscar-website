@@ -53,6 +53,71 @@ html {
  * out above content in mobile and later moves to the side with wider viewports.
  */
 
+
+ summary.nav {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+}
+
+summary.nav::after {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid #15171b;
+  border-inline: 7px solid transparent;
+  transition: 0.2s;
+  cursor: pointer;
+  margin: auto 0;
+}
+
+details[open] > summary.nav::after {
+  transform: rotate(-180deg);
+}
+
+summary.nav::-webkit-details-marker {
+  display: none;
+}
+
+
+ // changes above here
+
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding-left: 35px; /* Indentation for submenu items */
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+}
+
+ .collapse {
+  display: none;
+  margin: 0;
+}
+
+.collapse.show {
+  display: block;
+}
+
+button.collapser {
+  visibility: hidden;
+  padding: 0;
+  border-width: 0;
+}
+
+button.collapser::after {
+  visibility: visible;
+  content: " ▼"; /* Add a dropdown indicator */
+}
+
+button.collapser.active::after {
+  content: " ▲"; /* Change indicator when submenu is open */
+}
+
 .sidebar {
   text-align: center;
   padding: 0.7rem 0.7rem;
@@ -66,7 +131,7 @@ html {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 12rem;
+    width: 13rem;
     text-align: left;
   }
 }
@@ -75,6 +140,12 @@ html {
 .sidebar a {
   color: #000000;
   margin-bottom: 3px;
+  text-decoration: none;
+}
+
+.sidebar a:hover,
+.sidebar a:focus {
+  text-decoration: underline;
 }
 
 /* About section */
@@ -101,10 +172,20 @@ html {
   font-weight: bold;
 }
 
+.sidebar-nav-item > a {
+  color: #000;
+}
+
 .inner-sidebar-nav-item-two {
   margin-left: 12px;
   display: block;
 }
+
+.sidebar-submenu {
+  list-style: none;
+  padding: 0;
+}
+
 
 @media (max-width: 48em) {
   .sidebar-nav-item {
@@ -130,9 +211,25 @@ html {
     margin-right: 4px;
   }
 }
+.sidebar-submenu li {
+  margin-bottom: 0.0rem;
+}
 
+.submenu li a {
+  font-weight: normal;
+}
+
+.sidebar-submenu a {
+  font-size: 0.9em;
+  color: #666;
+  text-decoration: none;
+}
 a.inner-sidebar-nav-item:hover,
 a.inner-sidebar-nav-item:focus {
+  text-decoration: underline;
+}
+.sidebar-submenu a:hover,
+.sidebar-submenu a:focus {
   text-decoration: underline;
 }
 .inner-sidebar-nav-item.active {
@@ -143,8 +240,17 @@ a.inner-sidebar-nav-item-two:hover,
 a.inner-sidebar-nav-item-two:focus {
   text-decoration: underline;
 }
+.sidebar-nav-item.minor {
+  color: rgb(0,0,0);
+  font-size: 60%;
+}
 .inner-sidebar-nav-item-two.active {
   font-weight: bold;
+}
+
+.sidebar-submenu .active > a {
+  font-weight: bold;
+  color: #000;
 }
 
 a.sidebar-nav-item:hover,
@@ -155,9 +261,19 @@ a.sidebar-nav-item:focus {
   font-weight: bold;
 }
 
+li.active > a {
+  font-weight: bold;
+  color: #000;
+}
+
 .sidebar-nav-item.minor {
   color: rgb(0,0,0);
   font-size: 60%;
+}
+
+.sidebar-submenu .active > a {
+  font-weight: bold;
+  color: #000;
 }
 
 @media (max-width: 48em) {
@@ -441,3 +557,191 @@ a.sidebar-nav-item:focus {
     max-width: 30%;
   }
 } */
+
+
+
+
+
+
+
+
+
+
+
+/* For burger menu */
+/* For burger menu */
+/* For burger menu */
+
+.menu-checkbox {
+  display: none;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background: #202020;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #202020;
+  color: black;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.menu-checkbox:checked ~ .sidebar {
+  transform: translateX(0);
+}
+
+@media (min-width: 768px) {
+  .menu-icon {
+    display: none;
+  }
+
+  .sidebar {
+    transform: translateX(0);
+    width: 250px;
+    position: fixed;
+  }
+}
+
+/* Show burger menu icon on mobile */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: fixed;
+    top: 5px;
+    left: 15px;
+    z-index: 1100;
+    background: #202020;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 5px;
+    line-height: 1;
+  }
+
+  hr {
+    position: relative;
+    z-index: 0;
+  }
+
+  .sidebar {
+    z-index: 1000;
+    padding-top: 60px;
+  }
+
+  .sidebar-nav-item {
+    display: block;
+    width: 100%;
+    padding: 2px 10px;
+    border-bottom: none;
+    margin: 0;
+    text-align: left;
+  }
+
+  .sidebar-nav-item details {
+    display: block;
+    width: 100%;
+  }
+
+  summary.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  summary.nav {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 0;
+  }
+
+  summary.nav::marker,
+  summary.nav::-webkit-details-marker {
+    display: none;
+  }
+
+  details .submenu {
+    padding-left: 15px;
+    display: none;
+  }
+
+  details[open] .submenu {
+    display: block;
+  }
+
+  .submenu li {
+    display: block;
+    padding: 2px 0;
+    margin: 0;
+  }
+
+  .sidebar-nav-link {
+    display: block;
+    padding: 3px 0;
+    margin: 0;
+    text-align: left;
+  }
+}
+
+
+
+
+
+
+/* Tab container */
+/* Tab container */
+/* Tab container */
+
+.platform-tabs {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #ccc;
+  padding-bottom: 5px;
+}
+
+/* Individual tab */
+.platform-tabs label {
+  padding: 8px 12px;
+  margin: 0 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-bottom: 3px solid transparent;
+}
+
+/* Active tab */
+input[name="platform"]:checked + label {
+  color: #E36209; /* Orange highlight */
+  border-bottom: 3px solid #E36209;
+}
+
+/* Hide radio buttons */
+input[name="platform"] {
+  display: none;
+}

@@ -1,6 +1,7 @@
 ---
-layout: tutorial
-title: OSCAR Tutorials
+layout: page
+title: Tutorials
 main: true
 ---
+
 {% include tutorial.html %}
