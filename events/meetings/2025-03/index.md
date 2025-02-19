@@ -12,7 +12,7 @@ is_meeting_index: true
 * Where: [RPTU Kaiserslautern](https://math.rptu.de/en/home), Gottlieb-Daimler-Straße 48, 67663
 Kaiserslautern
 * What: A general coding sprint for OSCAR and OSCAR adjacent projects (GAP, Singular, ...)
-* Who: OSCAR developers ?
+* Who: OSCAR developers
 
 More information will appear on this page shortly.
 
