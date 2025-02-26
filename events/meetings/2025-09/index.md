@@ -4,6 +4,7 @@ title: Summer School 09/2025
 meeting: true
 meeting_nr: 202509
 is_meeting_index: true
+weight: 1
 ---
 
 # Summer School “Computer Algebra with OSCAR”

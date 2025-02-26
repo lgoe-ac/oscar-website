@@ -11,8 +11,6 @@ people:
     - {name: Christian Eder, affiliation: RPTU Kaiserslautern-Landau}
 
     - {name: Thomas Breuer, affiliation: RWTH Aachen}
-
-weight: 5
 ---
 
 {% include participants.html participants=page.people %}
