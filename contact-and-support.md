@@ -19,6 +19,8 @@ For public and permanent discussions, use our [GitHub discussion forum](https://
 
 To report a bug or issue, submit it to our [GitHub issue tracker](https://github.com/oscar-system/Oscar.jl/issues). A free [GitHub account](https://github.com) is required.
 
-### Email  
+### Mailing list
 
-If you prefer email over GitHub and Slack, you can reach us at [OSCAR-dev](mailto:oscar-dev@mathematik.uni-kl.de).  
+For announcements of OSCAR events and the occasional technical discussion, we also have a low-traffic mailing list `oscar-dev`.
+
+To join it, visit <https://mail.mathematik.uni-kl.de/mailman/listinfo/oscar-dev> and follow the instructions there. Afterwards you can send messages to it by writing an email to <oscar-dev@mathematik.uni-kl.de>.
